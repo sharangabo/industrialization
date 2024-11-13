@@ -8,10 +8,10 @@ spec:
     image: alpine
     script: |
       #!/bin/sh
-      # Add your cleanup logic here
       echo "Cleaning up resources..."
+      # Add cleanup logic here
 
-
+---
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -20,7 +20,9 @@ spec:
   steps:
   - name: run-nose-tests
     image: python:3.9
+    workingDir: /workspace/source
     script: |
       #!/bin/sh
       pip install nose
+      pip install -r requirements.txt
       nosetests tests/

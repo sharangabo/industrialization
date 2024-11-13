@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: python-test-pipeline
+spec:
+  workspaces:
+  - name: shared-workspace
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: https://github.com/your-username/industrialization
+    - name: revision
+      value: main
+
+  - name: run-tests
+    taskRef:
+      name: nose-test
+    runAfter:
+      - fetch-repository
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+
+  - name: cleanup
+    taskRef:
+      name: cleanup
+    runAfter:
+      - run-tests
