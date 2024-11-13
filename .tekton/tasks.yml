@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cleanup
+spec:
+  steps:
+  - name: cleanup
+    image: alpine
+    script: |
+      #!/bin/sh
+      # Add your cleanup logic here
+      echo "Cleaning up resources..."
