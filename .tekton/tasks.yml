@@ -10,3 +10,17 @@ spec:
       #!/bin/sh
       # Add your cleanup logic here
       echo "Cleaning up resources..."
+
+
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: nose-test
+spec:
+  steps:
+  - name: run-nose-tests
+    image: python:3.9
+    script: |
+      #!/bin/sh
+      pip install nose
+      nosetests tests/
